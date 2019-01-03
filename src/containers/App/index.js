@@ -10,6 +10,12 @@ class App extends React.Component {
     user: null
   };
 
+  componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      user && this.setState({ user });
+    })
+  }
+
   whatToRender = (Component, props={}) => <Component {...this.state} {...props} />
 
   login = async () => {
@@ -31,11 +37,14 @@ class App extends React.Component {
         <h1>Reddit Clone</h1>
         {user
         ? <div>
-          <button onClick={this.logout}>Log Out</button>
+          <p>user: {user.displayName}, email: {user.email}</p>
+          <Link to="/">Home</Link>
           <br/>
           <Link to="/posts">Posts</Link>
           <br/>
           <Link to="/add-post">Add a Post</Link>
+          <br/>
+          <button onClick={this.logout}>Log Out</button>
 
           <Switch>
             <Route path="/posts" render={() => this.whatToRender(Posts)} />
