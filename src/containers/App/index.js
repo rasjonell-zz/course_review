@@ -11,7 +11,7 @@ propTypes = {
     user: PropTypes.object
   };
 
-  whatToRender = (Component, props={}) => <Component {...this.state} {...props} />
+  whatToRender = (Component, props={}) => <Component {...this.props} />
 
   render() {
     const { user } = this.props;
