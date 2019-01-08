@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom";
+import AuthContextProvider from './contexts/auth_context';
 
 import Main from './main';
 import * as serviceWorker from './utils/serviceWorker';
 
 ReactDOM.render((
-  <BrowserRouter>
+  <AuthContextProvider>
     <Main />
-  </BrowserRouter>),
+  </AuthContextProvider>),
   document.getElementById('root')
 );
 
