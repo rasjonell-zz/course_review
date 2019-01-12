@@ -7,6 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
+import routes from 'config/routes_menu';
+
 const handleOnClick = (toggleDrawer, path = '/') => {
   toggleDrawer();
   history.push(path);
@@ -15,21 +17,17 @@ const handleOnClick = (toggleDrawer, path = '/') => {
 export default ({ toggleDrawer }) => (
   <div className="list">
     <List>
-      <ListItem button onClick={() => handleOnClick(toggleDrawer)}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Posts" />
-      </ListItem>
-    </List>
-    <Divider />
-    <List>
-      <ListItem button onClick={() => handleOnClick(toggleDrawer, '/add-post')}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Add Post" />
-      </ListItem>
+      {routes.map(route => (
+        <>
+          <ListItem button onClick={() => handleOnClick(toggleDrawer, route.path)}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary={route.displayName} />
+          </ListItem>
+          <Divider />
+        </>
+      ))}
     </List>
   </div>
 );
