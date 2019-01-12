@@ -34,6 +34,7 @@ class Posts extends React.Component {
       set(resultPost, mainPath, true);
     }
 
+    set(resultPost, 'rating', this.getRating(resultPost));
     postsRef.set({ ...resultPost });
   }
 
@@ -61,7 +62,7 @@ class Posts extends React.Component {
       posts && Object.keys(posts).map(key => (
         <div key={key}>
           <h2>Title: { posts[key].title }</h2>
-          <h4>Rating: { this.getRating(posts[key]) }</h4>
+          <h4>Rating: { posts[key].rating }</h4>
           <div>
             <button
               type="button"

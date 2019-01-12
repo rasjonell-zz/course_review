@@ -18,7 +18,8 @@ class AddPost extends React.Component {
     postsRef.push({
       title,
       upvote: {},
-      downvote: {}
+      downvote: {},
+      rating: 0
     });
     
     this.setState({ title: '', submitted: true });
