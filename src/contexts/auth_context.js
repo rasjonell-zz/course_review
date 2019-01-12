@@ -1,5 +1,6 @@
 import React from 'react';
-import { auth } from '../config/firebase';
+import Loading from 'components/Loading';
+import { auth } from 'config/firebase';
 
 const defaultAuthState = {
   user: null,
@@ -25,7 +26,7 @@ class AuthContextProvider extends React.Component {
 
     return (
       <AuthContext.Provider value={{ authStateReported, user }}>
-        {authStateReported ? children : <h1>Loading...</h1>}
+        {authStateReported ? children : <Loading />}
       </AuthContext.Provider>
     )
   }

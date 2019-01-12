@@ -2,7 +2,8 @@ import React from 'react';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import omit from 'lodash/omit';
-import { database } from '../../config/firebase';
+import { database } from 'config/firebase';
+import Loading from 'components/Loading';
 
 export default
 class Posts extends React.Component {
@@ -52,9 +53,7 @@ class Posts extends React.Component {
 
     if(loading) {
       return (
-        <div>
-          Loading ...
-        </div>
+        <Loading size={50} />
       )
     }
 

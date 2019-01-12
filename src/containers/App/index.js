@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import NavBar from '../../components/NavBar';
-import Posts from '../../containers/Posts';
-import AddPost from '../../containers/AddPost';
+import NavBar from 'components/NavBar';
+import Posts from 'containers/Posts';
+import AddPost from 'containers/AddPost';
+import NotFoundPage from 'containers/NotFound'
 
 class App extends React.Component {
 propTypes = {
@@ -19,8 +20,9 @@ propTypes = {
       <div className="App">
         <NavBar {...{ user }} />
         <Switch>
-          <Route path="/posts" render={() => this.whatToRender(Posts)} />
-          <Route path="/add-post" render={() => this.whatToRender(AddPost)} />
+          <Route exact path="/" render={() => this.whatToRender(Posts)} />
+          <Route exact path="/add-post" render={() => this.whatToRender(AddPost)} />
+          <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>
     );

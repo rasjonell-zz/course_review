@@ -1,5 +1,5 @@
 import React from 'react';
-import { database } from '../../config/firebase';
+import { database } from 'config/firebase';
 
 export default
 class AddPost extends React.Component {
