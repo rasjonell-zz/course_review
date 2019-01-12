@@ -7,7 +7,7 @@ import AddPost from 'containers/AddPost';
 import NotFoundPage from 'containers/NotFound';
 
 class App extends React.Component {
-  propTypes = {
+  static propTypes = {
     user: PropTypes.object.isRequired
   };
 
@@ -20,7 +20,7 @@ class App extends React.Component {
       <div className="App">
         <NavBar {...{ user }} />
         <Switch>
-          <Route exact path="/posts" render={() => this.whatToRender(Posts)} />
+          <Route exact path="/" render={() => this.whatToRender(Posts)} />
           <Route exact path="/add-post" render={() => this.whatToRender(AddPost)} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
