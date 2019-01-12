@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import history from 'config/history';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import App from 'containers/App';
 import SignIn from 'containers/SignIn';
-
 import { AuthContext } from 'contexts/auth_context';
 
 export default () => (
@@ -13,9 +13,9 @@ export default () => (
     <AuthContext.Consumer>
       {({ user }) =>
         user ? (
-          <BrowserRouter>
+          <Router history={history}>
             <App {...{ user }} />
-          </BrowserRouter>
+          </Router>
         ) : (
           <SignIn />
         )

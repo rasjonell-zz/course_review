@@ -11,8 +11,6 @@ class App extends React.Component {
     user: PropTypes.object.isRequired
   };
 
-  whatToRender = Component => <Component {...this.props} />;
-
   render() {
     const { user } = this.props;
 
@@ -20,8 +18,8 @@ class App extends React.Component {
       <div className="App">
         <NavBar {...{ user }} />
         <Switch>
-          <Route exact path="/" render={() => this.whatToRender(Posts)} />
-          <Route exact path="/add-post" render={() => this.whatToRender(AddPost)} />
+          <Route exact path="/" render={() => <Posts user={user} />} />
+          <Route exact path="/add-post" render={() => <AddPost user={user} />} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>

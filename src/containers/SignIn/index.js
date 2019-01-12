@@ -13,7 +13,7 @@ export default () => (
       size="large"
       variant="contained"
       color="primary"
-      onClick={() => auth.signInWithRedirect(provider)}
+      onClick={() => auth.signInWithPopup(provider)}
     >
       Sign In
     </Button>

@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
+import SideDrawer from 'components/Drawer';
 import { auth } from 'config/firebase';
 
 const styles = {
@@ -32,7 +33,8 @@ class NavBar extends React.Component {
   };
 
   state = {
-    anchorEl: null
+    anchorEl: null,
+    openDrawer: false
   };
 
   handleMenu = event => {
@@ -41,6 +43,10 @@ class NavBar extends React.Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleDrawer = () => {
+    this.setState({ openDrawer: !this.state.openDrawer });
   };
 
   handleSignOut = () => {
@@ -79,7 +85,7 @@ class NavBar extends React.Component {
   );
 
   render() {
-    const { anchorEl } = this.state;
+    const { anchorEl, openDrawer } = this.state;
     const { user, classes } = this.props;
     const open = Boolean(anchorEl);
 
@@ -87,7 +93,12 @@ class NavBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+            <IconButton
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="Menu"
+              onClick={() => this.handleDrawer()}
+            >
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
@@ -96,6 +107,7 @@ class NavBar extends React.Component {
             {this.renderAuthBar(open, anchorEl, user)}
           </Toolbar>
         </AppBar>
+        <SideDrawer open={openDrawer} toggleDrawer={this.handleDrawer} />
       </div>
     );
   }
