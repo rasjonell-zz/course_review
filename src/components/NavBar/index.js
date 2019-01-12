@@ -56,7 +56,7 @@ class NavBar extends React.Component {
         onClick={this.handleMenu}
         color="inherit"
       >
-        <Avatar alt="Remy Sharp" src={user.photoURL} />
+        <Avatar alt={user.displayName} src={user.photoURL} />
       </IconButton>
       <Menu
         id="menu-appbar"
