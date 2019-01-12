@@ -1,13 +1,10 @@
 import React from 'react';
 import { database } from 'config/firebase';
 
-export default
-class AddPost extends React.Component {
-  state = { title: '', submitted: false }
+export default class AddPost extends React.Component {
+  state = { title: '', submitted: false };
 
-  handleChange = e => (
-    this.setState({ title: e.target.value })
-  )
+  handleChange = e => this.setState({ title: e.target.value });
 
   handleSubmit = e => {
     const postsRef = database.ref('posts');
@@ -21,13 +18,13 @@ class AddPost extends React.Component {
       downvote: {},
       rating: 0
     });
-    
+
     this.setState({ title: '', submitted: true });
-    
+
     setTimeout(() => {
-      this.setState({ submitted: false })
+      this.setState({ submitted: false });
     }, 2000);
-  }
+  };
 
   render() {
     const { title, submitted } = this.state;
@@ -40,14 +37,11 @@ class AddPost extends React.Component {
           value={title}
           onChange={this.handleChange}
         />
-        <button
-          type="submit"
-          onClick={this.handleSubmit}
-        >
+        <button type="submit" onClick={this.handleSubmit}>
           Add Post
         </button>
         {submitted && <h1>Post has been submitted</h1>}
       </div>
-    )
+    );
   }
 }

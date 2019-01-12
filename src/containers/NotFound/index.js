@@ -1,3 +1,3 @@
-import React from 'react'
+import React from 'react';
 
-export default () => <div>Not Found :(</div>
+export default () => <div>Not Found :(</div>;

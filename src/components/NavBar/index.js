@@ -14,25 +14,25 @@ import { auth } from 'config/firebase';
 
 const styles = {
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   grow: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
-  },
+    marginRight: 20
+  }
 };
 
 class NavBar extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
   };
 
   state = {
-    anchorEl: null,
+    anchorEl: null
   };
 
   handleMenu = event => {
@@ -46,7 +46,7 @@ class NavBar extends React.Component {
   handleSignOut = () => {
     auth.signOut();
     this.handleClose();
-  }
+  };
 
   renderAuthBar = (open, anchorEl, user) => (
     <div>
@@ -63,11 +63,11 @@ class NavBar extends React.Component {
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'right'
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'right'
         }}
         open={open}
         onClose={this.handleClose}
@@ -76,7 +76,7 @@ class NavBar extends React.Component {
         <MenuItem onClick={this.handleSignOut}>Sign Out</MenuItem>
       </Menu>
     </div>
-  )
+  );
 
   render() {
     const { anchorEl } = this.state;

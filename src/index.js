@@ -5,10 +5,10 @@ import AuthContextProvider from 'contexts/auth_context';
 import Main from './main';
 import * as serviceWorker from 'utils/serviceWorker';
 
-ReactDOM.render((
+ReactDOM.render(
   <AuthContextProvider>
     <Main />
-  </AuthContextProvider>),
+  </AuthContextProvider>,
   document.getElementById('root')
 );
 

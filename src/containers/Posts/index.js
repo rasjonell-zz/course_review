@@ -5,12 +5,11 @@ import omit from 'lodash/omit';
 import { database } from 'config/firebase';
 import Loading from 'components/Loading';
 
-export default
-class Posts extends React.Component {
+export default class Posts extends React.Component {
   state = {
     posts: null,
     loading: true
-  }
+  };
 
   componentWillMount() {
     const postsRef = database.ref('posts');
@@ -20,15 +19,17 @@ class Posts extends React.Component {
   }
 
   handleRating = (post, key, main, secondary) => {
-    const { user: { uid } } = this.props;
+    const {
+      user: { uid }
+    } = this.props;
     const mainPath = `${main}[${uid}]`;
     const secondaryPath = `${secondary}[${uid}]`;
-    const postsRef = database.ref(`posts/${key}`)
-    let resultPost = {...post};
+    const postsRef = database.ref(`posts/${key}`);
+    let resultPost = { ...post };
 
-    if(get(post, mainPath)) {
+    if (get(post, mainPath)) {
       resultPost = omit(resultPost, mainPath);
-    } else if(get(post, secondaryPath)) {
+    } else if (get(post, secondaryPath)) {
       resultPost = omit(resultPost, secondaryPath);
       set(resultPost, mainPath, true);
     } else {
@@ -37,31 +38,30 @@ class Posts extends React.Component {
 
     set(resultPost, 'rating', this.getRating(resultPost));
     postsRef.set({ ...resultPost });
-  }
+  };
 
   getRating = post => {
-    if(post.upvote && post.downvote)
+    if (post.upvote && post.downvote)
       return Object.keys(post.upvote).length - Object.keys(post.downvote).length;
 
-    if(!post.upvote && post.downvote) return (- Object.keys(post.downvote).length);
-    if(!post.downvote && post.upvote) return Object.keys(post.upvote).length;
+    if (!post.upvote && post.downvote) return -Object.keys(post.downvote).length;
+    if (!post.downvote && post.upvote) return Object.keys(post.upvote).length;
     return 0;
-  }
+  };
 
   render() {
     const { posts, loading } = this.state;
 
-    if(loading) {
-      return (
-        <Loading size={50} />
-      )
+    if (loading) {
+      return <Loading size={50} />;
     }
 
     return (
-      posts && Object.keys(posts).map(key => (
+      posts &&
+      Object.keys(posts).map(key => (
         <div key={key}>
-          <h2>Title: { posts[key].title }</h2>
-          <h4>Rating: { posts[key].rating }</h4>
+          <h2>Title: {posts[key].title}</h2>
+          <h4>Rating: {posts[key].rating}</h4>
           <div>
             <button
               type="button"
@@ -80,5 +80,4 @@ class Posts extends React.Component {
       ))
     );
   }
-
 }

@@ -9,15 +9,16 @@ const defaultAuthState = {
 
 export const AuthContext = React.createContext(defaultAuthState);
 
-export default
-class AuthContextProvider extends React.Component {
+export default class AuthContextProvider extends React.Component {
   state = defaultAuthState;
 
   componentDidMount() {
-    auth.onAuthStateChanged(user => this.setState({
-      authStateReported: true,
-      user
-    }));
+    auth.onAuthStateChanged(user =>
+      this.setState({
+        authStateReported: true,
+        user
+      })
+    );
   }
 
   render() {
@@ -28,6 +29,6 @@ class AuthContextProvider extends React.Component {
       <AuthContext.Provider value={{ authStateReported, user }}>
         {authStateReported ? children : <Loading />}
       </AuthContext.Provider>
-    )
+    );
   }
 }

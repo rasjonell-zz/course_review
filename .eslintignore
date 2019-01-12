@@ -1,0 +1,4 @@
+/legacy/**
+/build/**
+/src/spec_support/**
+/src/**/*.spec.js

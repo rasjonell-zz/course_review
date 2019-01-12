@@ -13,7 +13,8 @@ export default () => (
       size="large"
       variant="contained"
       color="primary"
-      onClick={() => auth.signInWithRedirect(provider)}>
+      onClick={() => auth.signInWithRedirect(provider)}
+    >
       Sign In
     </Button>
   </div>
