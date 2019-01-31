@@ -18,7 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "update_courses": "cd firebase && python3 parse_courses.py"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -6,25 +6,15 @@ import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
+import SearchIcon from '@material-ui/icons/Search';
+import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
 import SideDrawer from 'components/Drawer';
 import { auth } from 'config/firebase';
-
-const styles = {
-  root: {
-    flexGrow: 1
-  },
-  grow: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  }
-};
+import styles from './styles';
 
 class NavBar extends React.Component {
   static propTypes = {
@@ -101,9 +91,22 @@ class NavBar extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
+            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               Reddit Clone
             </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+              />
+            </div>
+            <div className={classes.grow} />
             {this.renderAuthBar(open, anchorEl, user)}
           </Toolbar>
         </AppBar>
