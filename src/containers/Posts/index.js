@@ -1,7 +1,8 @@
 import React from 'react';
-import { database } from 'config/firebase';
-import { setRate } from 'helpers/rating_helper';
 import Loading from 'components/Loading';
+import { database } from 'config/firebase';
+import { onFetch } from 'helpers/fetch_helper';
+import { setRate } from 'helpers/rating_helper';
 
 export default class Posts extends React.Component {
   state = {
@@ -10,10 +11,7 @@ export default class Posts extends React.Component {
   };
 
   componentWillMount() {
-    const postsRef = database.ref('posts');
-    postsRef.on('value', snapshot => {
-      this.setState({ posts: snapshot.val(), loading: false });
-    });
+    onFetch('posts', posts => this.setState({ posts, loading: false }));
   }
 
   handleRating = (post, key, main, secondary) => {

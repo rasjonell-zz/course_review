@@ -1,5 +1,5 @@
 import React from 'react';
-import { database } from 'config/firebase';
+import { onFetch } from 'helpers/fetch_helper';
 
 const defaultRootState = {
   courses: null
@@ -11,7 +11,7 @@ export default class RootContextProvider extends React.Component {
   state = defaultRootState;
 
   componentDidMount() {
-    database.ref('courses').once('value', snapshot => this.setState({ courses: snapshot.val() }));
+    onFetch('courses', courses => this.setState({ courses }));
   }
 
   render() {

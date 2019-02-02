@@ -38,11 +38,12 @@ export default class AddPost extends React.Component {
       <div>
         <h1>Select a course: </h1>
         <select name="course" id="course" onChange={this.handleChange}>
-          {courses.map(course => (
-            <option key={course.id} value={course.id}>
-              {course.title}
-            </option>
-          ))}
+          {courses &&
+            courses.map(course => (
+              <option key={course.id} value={course.id}>
+                {course.title}
+              </option>
+            ))}
         </select>
         <input
           name="feedback"

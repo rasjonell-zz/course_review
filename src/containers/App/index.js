@@ -17,11 +17,11 @@ class App extends React.Component {
   whatToRender = (Component, props) => <Component {...props} {...this.props} />;
 
   render() {
-    const { user } = this.props;
+    const { user, courses } = this.props;
 
     return (
       <div className="App">
-        <NavBar {...{ user }} />
+        <NavBar {...{ user, courses }} />
         <Switch>
           <Route exact path="/" render={props => this.whatToRender(Posts, props)} />
           <Route exact path="/courses" render={props => this.whatToRender(Courses, props)} />

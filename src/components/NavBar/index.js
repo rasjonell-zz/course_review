@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Menu from '@material-ui/core/Menu';
+import SearchBar from 'components/SearchBar';
 import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
@@ -18,8 +18,9 @@ import styles from './styles';
 
 class NavBar extends React.Component {
   static propTypes = {
+    user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
+    courses: PropTypes.arrayOf(PropTypes.object)
   };
 
   state = {
@@ -76,7 +77,7 @@ class NavBar extends React.Component {
 
   render() {
     const { anchorEl, openDrawer } = this.state;
-    const { user, classes } = this.props;
+    const { user, courses, classes } = this.props;
     const open = Boolean(anchorEl);
 
     return (
@@ -98,13 +99,7 @@ class NavBar extends React.Component {
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
-                }}
-              />
+              <SearchBar courses={courses} />
             </div>
             <div className={classes.grow} />
             {this.renderAuthBar(open, anchorEl, user)}

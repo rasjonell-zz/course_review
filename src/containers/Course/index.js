@@ -1,6 +1,7 @@
 import React from 'react';
-import { database } from 'config/firebase';
 import Loading from 'components/Loading';
+import { database } from 'config/firebase';
+import { onFetch } from 'helpers/fetch_helper';
 import { setRate } from 'helpers/rating_helper';
 
 export default class CoursePage extends React.Component {
@@ -9,16 +10,24 @@ export default class CoursePage extends React.Component {
     loading: true
   };
 
-  componentWillMount() {
+  componentDidMount() {
     const {
       match: {
         params: { id }
       }
     } = this.props;
-    const feedbackRef = database.ref(`feedbacks/${id}`);
-    feedbackRef.on('value', snapshot => {
-      this.setState({ feedbacks: snapshot.val(), loading: false });
-    });
+    onFetch(`feedbacks/${id}`, feedbacks => this.setState({ feedbacks, loading: false }));
+  }
+
+  componentDidUpdate(props) {
+    const {
+      match: {
+        params: { id }
+      }
+    } = this.props;
+
+    if (props.match.params.id !== id)
+      onFetch(`feedbacks/${id}`, feedbacks => this.setState({ feedbacks, loading: false }));
   }
 
   handleRating = (feedback, key, main, secondary) => {
