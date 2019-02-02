@@ -1,8 +1,6 @@
 import React from 'react';
-import get from 'lodash/get';
-import set from 'lodash/set';
-import omit from 'lodash/omit';
 import { database } from 'config/firebase';
+import { setRate } from 'helpers/rating_helper';
 import Loading from 'components/Loading';
 
 export default class Posts extends React.Component {
@@ -24,29 +22,9 @@ export default class Posts extends React.Component {
     } = this.props;
     const mainPath = `${main}[${uid}]`;
     const secondaryPath = `${secondary}[${uid}]`;
+    const resultPost = setRate(post, mainPath, secondaryPath);
     const postsRef = database.ref(`posts/${key}`);
-    let resultPost = { ...post };
-
-    if (get(post, mainPath)) {
-      resultPost = omit(resultPost, mainPath);
-    } else if (get(post, secondaryPath)) {
-      resultPost = omit(resultPost, secondaryPath);
-      set(resultPost, mainPath, true);
-    } else {
-      set(resultPost, mainPath, true);
-    }
-
-    set(resultPost, 'rating', this.getRating(resultPost));
     postsRef.set({ ...resultPost });
-  };
-
-  getRating = post => {
-    if (post.upvote && post.downvote)
-      return Object.keys(post.upvote).length - Object.keys(post.downvote).length;
-
-    if (!post.upvote && post.downvote) return -Object.keys(post.downvote).length;
-    if (!post.downvote && post.upvote) return Object.keys(post.upvote).length;
-    return 0;
   };
 
   render() {
@@ -57,27 +35,29 @@ export default class Posts extends React.Component {
     }
 
     return (
-      posts &&
-      Object.keys(posts).map(key => (
-        <div key={key}>
-          <h2>Title: {posts[key].title}</h2>
-          <h4>Rating: {posts[key].rating}</h4>
-          <div>
-            <button
-              type="button"
-              onClick={() => this.handleRating(posts[key], key, 'upvote', 'downvote')}
-            >
-              Upvote
-            </button>
-            <button
-              type="button"
-              onClick={() => this.handleRating(posts[key], key, 'downvote', 'upvote')}
-            >
-              Downvote
-            </button>
-          </div>
-        </div>
-      ))
+      <div>
+        {posts &&
+          Object.keys(posts).map(key => (
+            <div key={key}>
+              <h2>Title: {posts[key].title}</h2>
+              <h4>Rating: {posts[key].rating}</h4>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => this.handleRating(posts[key], key, 'upvote', 'downvote')}
+                >
+                  Upvote
+                </button>
+                <button
+                  type="button"
+                  onClick={() => this.handleRating(posts[key], key, 'downvote', 'upvote')}
+                >
+                  Downvote
+                </button>
+              </div>
+            </div>
+          ))}
+      </div>
     );
   }
 }

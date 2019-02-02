@@ -4,7 +4,11 @@ export default [
     path: '/'
   },
   {
-    displayName: 'Create a Post',
-    path: '/add-post'
+    displayName: 'Leave a Feedback',
+    path: '/review'
+  },
+  {
+    displayName: 'Courses',
+    path: '/courses'
   }
 ];

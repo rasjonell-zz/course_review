@@ -2,24 +2,28 @@ import React from 'react';
 import { database } from 'config/firebase';
 
 export default class AddPost extends React.Component {
-  state = { title: '', submitted: false };
+  state = {
+    course: null,
+    feedback: '',
+    submitted: false
+  };
 
-  handleChange = e => this.setState({ title: e.target.value });
+  handleChange = ({ target: { name, value } }) => this.setState({ [name]: value });
 
   handleSubmit = e => {
-    const postsRef = database.ref('posts');
-    const { title } = this.state;
+    const { feedback, course } = this.state;
+    const postsRef = database.ref(`feedbacks/${course}`);
 
     e.preventDefault();
 
     postsRef.push({
-      title,
+      feedback,
       upvote: {},
       downvote: {},
       rating: 0
     });
 
-    this.setState({ title: '', submitted: true });
+    this.setState({ course: null, feedback: '', submitted: true });
 
     setTimeout(() => {
       this.setState({ submitted: false });
@@ -27,14 +31,24 @@ export default class AddPost extends React.Component {
   };
 
   render() {
-    const { title, submitted } = this.state;
+    const { courses } = this.props;
+    const { feedback, submitted } = this.state;
 
     return (
       <div>
+        <h1>Select a course: </h1>
+        <select name="course" id="course" onChange={this.handleChange}>
+          {courses.map(course => (
+            <option key={course.id} value={course.id}>
+              {course.title}
+            </option>
+          ))}
+        </select>
         <input
+          name="feedback"
           type="text"
-          placeholder="Write the post title"
-          value={title}
+          placeholder="Write the course feedback"
+          value={feedback}
           onChange={this.handleChange}
         />
         <button type="submit" onClick={this.handleSubmit}>

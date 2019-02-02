@@ -19,6 +19,7 @@ for row in TABLE('tr'):
   cols = [elem.text.strip() for elem in row('td')]
   cols = [elem for elem in cols if elem]
   DATA.append({
+    'id': len(DATA),
     'code': f'{cols[0]} {cols[1]}',
     'title': cols[2],
     'clusters': cols[3].split(',')

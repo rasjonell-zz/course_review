@@ -18,7 +18,7 @@ export default ({ toggleDrawer }) => (
   <div className="list">
     <List>
       {routes.map(route => (
-        <>
+        <React.Fragment key={route.path}>
           <ListItem button onClick={() => handleOnClick(toggleDrawer, route.path)}>
             <ListItemIcon>
               <InboxIcon />
@@ -26,7 +26,7 @@ export default ({ toggleDrawer }) => (
             <ListItemText primary={route.displayName} />
           </ListItem>
           <Divider />
-        </>
+        </React.Fragment>
       ))}
     </List>
   </div>
