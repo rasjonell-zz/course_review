@@ -64,8 +64,6 @@ class Search extends React.Component {
     const { courses } = this.props;
     const input = deburr(value.trim()).toLowerCase();
 
-    console.log(input);
-
     return input.length === 0
       ? []
       : courses.filter(({ title }) => title.toLowerCase().includes(input)).slice(0, 5);
@@ -91,7 +89,10 @@ class Search extends React.Component {
     });
   };
 
-  onSuggestionSelected = (_, { suggestion }) => history.push(`/courses/${suggestion.id}`);
+  onSuggestionSelected = (_, { suggestion }) => {
+    this.setState({ value: '', suggestions: [] });
+    history.push(`/courses/${suggestion.id}`);
+  };
 
   render() {
     const { value } = this.state;
