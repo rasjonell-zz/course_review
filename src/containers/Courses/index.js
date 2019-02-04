@@ -1,34 +1,26 @@
 import React from 'react';
 import Link from 'react-router-dom/Link';
 import Loading from 'components/Loading';
+import WithCourses from 'components/WithCourses';
 
-export default class Courses extends React.Component {
-  static defaultProps = {
-    courses: null
-  };
-
-  render() {
-    const { courses } = this.props;
-
-    if (!courses) {
-      return <Loading size={50} />;
-    }
-
-    return (
-      <div>
-        {courses.map(course => (
-          <div key={course.id}>
-            <Link to={`/courses/${course.id}`}>
-              <h1>{course.title}</h1>
-            </Link>
-            <div>
-              {course.clusters.map(n => (
-                <p key={n}>{n}</p>
-              ))}
-            </div>
+const Courses = ({ courses }) =>
+  courses ? (
+    <div>
+      {courses.map(course => (
+        <div key={course.id}>
+          <Link to={`/courses/${course.id}`}>
+            <h1>{course.title}</h1>
+          </Link>
+          <div>
+            {course.clusters.map(n => (
+              <p key={n}>{n}</p>
+            ))}
           </div>
-        ))}
-      </div>
-    );
-  }
-}
+        </div>
+      ))}
+    </div>
+  ) : (
+    <Loading size={50} />
+  );
+
+export default WithCourses(Courses);

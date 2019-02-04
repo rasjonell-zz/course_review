@@ -1,7 +1,8 @@
 import React from 'react';
 import { database } from 'config/firebase';
+import WithCourses from 'components/WithCourses';
 
-export default class AddPost extends React.Component {
+class LeaveFeedback extends React.Component {
   state = {
     course: null,
     feedback: '',
@@ -60,3 +61,5 @@ export default class AddPost extends React.Component {
     );
   }
 }
+
+export default WithCourses(LeaveFeedback);

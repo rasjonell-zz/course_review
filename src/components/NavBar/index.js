@@ -11,6 +11,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
+import WithUser from 'components/WithUser';
+import WithCourses from 'components/WithCourses';
 
 import SideDrawer from 'components/Drawer';
 import { signOut } from 'helpers/auth_helper';
@@ -112,4 +114,4 @@ class NavBar extends React.Component {
   }
 }
 
-export default withStyles(styles)(NavBar);
+export default WithUser(WithCourses(withStyles(styles)(NavBar)));

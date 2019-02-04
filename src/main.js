@@ -6,25 +6,24 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import App from 'containers/App';
 import SignIn from 'containers/SignIn';
 import { RootContext } from 'contexts/root_context';
-import { AuthContext } from 'contexts/auth_context';
 
-export default () => (
+import WithUser from 'components/WithUser';
+
+const Main = props => (
   <>
     <CssBaseline />
     <RootContext.Consumer>
-      {({ courses }) => (
-        <AuthContext.Consumer>
-          {({ user }) =>
-            user ? (
-              <Router history={history}>
-                <App {...{ user, courses }} />
-              </Router>
-            ) : (
-              <SignIn />
-            )
-          }
-        </AuthContext.Consumer>
-      )}
+      {({ courses }) =>
+        props.user ? (
+          <Router history={history}>
+            <App user={props.user} courses={courses} />
+          </Router>
+        ) : (
+          <SignIn />
+        )
+      }
     </RootContext.Consumer>
   </>
 );
+
+export default WithUser(Main);
