@@ -1,6 +1,6 @@
 import React from 'react';
-import Loading from 'components/Loading';
 import { auth } from 'config/firebase';
+import { saveUser } from 'helpers/user_helper';
 
 const defaultAuthState = {
   user: null,
@@ -13,22 +13,16 @@ export default class AuthContextProvider extends React.Component {
   state = defaultAuthState;
 
   componentDidMount() {
-    auth.onAuthStateChanged(user =>
-      this.setState({
-        authStateReported: true,
-        user
-      })
-    );
+    auth.onAuthStateChanged(async newUser => {
+      const user = newUser && (await saveUser(newUser));
+      this.setState({ user });
+    });
   }
 
   render() {
     const { children } = this.props;
-    const { authStateReported, user } = this.state;
+    const { user } = this.state;
 
-    return (
-      <AuthContext.Provider value={{ authStateReported, user }}>
-        {authStateReported ? children : <Loading />}
-      </AuthContext.Provider>
-    );
+    return <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>;
   }
 }
