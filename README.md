@@ -1,4 +1,4 @@
-# Reddit Clone with React and Firebase
+# Course Review/Feedback/Suggestion Platform
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
