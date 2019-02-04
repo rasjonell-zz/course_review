@@ -13,7 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
 
 import SideDrawer from 'components/Drawer';
-import { auth } from 'config/firebase';
+import { signOut } from 'helpers/auth_helper';
+
 import styles from './styles';
 
 class NavBar extends React.Component {
@@ -40,8 +41,8 @@ class NavBar extends React.Component {
     this.setState({ openDrawer: !this.state.openDrawer });
   };
 
-  handleSignOut = () => {
-    auth.signOut();
+  handleSignOut = async () => {
+    await signOut();
     this.handleClose();
   };
 
