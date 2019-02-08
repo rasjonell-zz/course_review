@@ -6,7 +6,9 @@ export default WrappedComponent =>
     render() {
       return (
         <AuthContext.Consumer>
-          {({ user }) => <WrappedComponent user={user} {...this.props} />}
+          {({ user, setUser }) => (
+            <WrappedComponent user={user} setUser={setUser} {...this.props} />
+          )}
         </AuthContext.Consumer>
       );
     }

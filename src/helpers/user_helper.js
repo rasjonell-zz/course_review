@@ -1,4 +1,8 @@
+import has from 'lodash/has';
 import { database } from 'config/firebase';
+import { getValue } from 'helpers/fetch_helper';
+
+export const isValid = user => has(user, ['major', 'year', 'best_course', 'worst_course']);
 
 export const saveUser = async user => {
   if (!user) return;
@@ -14,8 +18,6 @@ export const saveUser = async user => {
   return user;
 };
 
-export const getUsers = async () =>
-  await database
-    .ref('users')
-    .once('value')
-    .val();
+export const getUsers = async () => getValue('users');
+
+export const getUser = async uid => getValue(`users/${uid}`);

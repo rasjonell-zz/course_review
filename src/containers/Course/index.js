@@ -1,10 +1,11 @@
 import React from 'react';
 import Loading from 'components/Loading';
 import { database } from 'config/firebase';
+import WithUser from 'components/WithUser';
 import { onFetch } from 'helpers/fetch_helper';
 import { setRate } from 'helpers/rating_helper';
 
-export default class CoursePage extends React.Component {
+class CoursePage extends React.Component {
   state = {
     feedbacks: null,
     loading: true
@@ -81,3 +82,5 @@ export default class CoursePage extends React.Component {
     );
   }
 }
+
+export default WithUser(CoursePage);
