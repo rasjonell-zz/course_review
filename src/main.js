@@ -16,7 +16,7 @@ export default () => {
       <CssBaseline />
       {user ? (
         <Router history={history}>
-          <App />
+          <App history={history} />
         </Router>
       ) : (
         <SignIn />

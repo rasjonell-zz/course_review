@@ -35,8 +35,12 @@ class NavBar extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
-    this.setState({ anchorEl: null });
+  handleClose = () => this.setState({ anchorEl: null });
+
+  handleProfile = () => {
+    const { history } = this.props;
+    this.handleClose();
+    history.push('/profile');
   };
 
   handleDrawer = () => {
@@ -45,7 +49,6 @@ class NavBar extends React.Component {
 
   handleSignOut = async () => {
     await signOut();
-    this.handleClose();
   };
 
   renderAuthBar = (open, anchorEl, user) => (
@@ -72,7 +75,7 @@ class NavBar extends React.Component {
         open={open}
         onClose={this.handleClose}
       >
-        <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+        <MenuItem onClick={this.handleProfile}>Profile</MenuItem>
         <MenuItem onClick={this.handleSignOut}>Sign Out</MenuItem>
       </Menu>
     </div>

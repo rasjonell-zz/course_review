@@ -19,8 +19,8 @@ const FeedbackDialog = ({ open, leaveFeedback, fullScreen, course_id }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const postRef = database.ref(`feedbacks/${course_id}`);
-    const key = postRef.push({
+    const feedbackRef = database.ref('feedbacks');
+    const key = feedbackRef.push({
       feedback,
       upvote: {},
       downvote: {},
