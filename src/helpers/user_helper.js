@@ -1,20 +1,32 @@
-import has from 'lodash/has';
 import { database } from 'config/firebase';
 import { getValue } from 'helpers/fetch_helper';
 
-export const isValid = user => has(user, ['major', 'year', 'best_course', 'worst_course']);
+export const isValid = user => user.feedbacks && Object.keys(user.feedbacks).length >= 2;
 
-export const saveUser = async user => {
+export const createUser = async user => {
   if (!user) return;
 
-  const { uid, displayName, photoURL, email } = user;
-  const userRef = database.ref(`users/${uid}`);
+  const userRef = database.ref(`users/${user.uid}`);
   const snapshot = await userRef.once('value');
 
+  const { uid, displayName, photoURL, email } = user;
+
   if (!snapshot.val()) {
-    userRef.set({ uid, displayName, photoURL, email });
+    userRef.set({
+      uid,
+      displayName,
+      photoURL,
+      email
+    });
   }
 
+  return user;
+};
+
+export const updateUser = async user => {
+  if (!user) return;
+  const userRef = database.ref(`users/${user.uid}`);
+  await userRef.update(user);
   return user;
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { auth } from 'config/firebase';
 import Loading from 'components/Loading';
-import { getUser, saveUser } from 'helpers/user_helper';
+import { getUser, createUser, updateUser } from 'helpers/user_helper';
 
 const defaultAuthState = {
   user: null,
@@ -15,14 +15,15 @@ export default class AuthContextProvider extends React.Component {
 
   componentDidMount() {
     auth.onAuthStateChanged(async newUser => {
-      const preUser = newUser && (await saveUser(newUser));
-      const user = await getUser(preUser.uid);
-      console.log(user);
+      const preUser = await createUser(newUser);
+      const user = preUser && (await getUser(preUser.uid));
       this.setState({ user, authStateReported: true });
     });
   }
 
-  setUser = user => this.setState({ user });
+  setUser = async user => {
+    this.setState({ user: await updateUser(user) });
+  };
 
   render() {
     const { children } = this.props;
