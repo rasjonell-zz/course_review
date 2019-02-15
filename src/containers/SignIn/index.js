@@ -1,16 +1,20 @@
 import React from 'react';
-import AUALogo from 'images/aua_logo.png';
 import Button from '@material-ui/core/Button';
+import MailIcon from '@material-ui/icons/MailRounded';
+import { withStyles } from '@material-ui/core/styles';
 
 import { signIn } from 'helpers/auth_helper';
+import styles from './styles';
 
-import './sign_in.css';
-
-export default () => (
-  <div className="login">
-    <img src={AUALogo} alt="" />
-    <Button size="large" variant="contained" color="primary" onClick={signIn}>
-      Sign In
-    </Button>
+const SignIn = ({ classes }) => (
+  <div className={classes.root}>
+    <MailIcon className={classes.mailIcon} />
+    <div classes={classes.button}>
+      <Button size="large" variant="contained" color="primary" onClick={signIn}>
+        Sign In With Your AUA E-Mail
+      </Button>
+    </div>
   </div>
 );
+
+export default withStyles(styles)(SignIn);

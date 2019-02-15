@@ -15,9 +15,13 @@ export default class AuthContextProvider extends React.Component {
 
   componentDidMount() {
     auth.onAuthStateChanged(async newUser => {
-      const preUser = await createUser(newUser);
-      const user = preUser && (await getUser(preUser.uid));
-      this.setState({ user, authStateReported: true });
+      if (newUser) {
+        const preUser = await createUser(newUser);
+        const user = preUser && (await getUser(preUser.uid));
+        this.setState({ user, authStateReported: true });
+      } else {
+        this.setState({ user: null, authStateReported: true });
+      }
     });
   }
 

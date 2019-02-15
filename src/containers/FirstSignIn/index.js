@@ -71,6 +71,7 @@ const FirstSignIn = ({ classes }) => {
       </form>
       <FeedbackDialog
         {...{
+          user,
           open,
           leaveFeedback,
           course_id: state.current_course

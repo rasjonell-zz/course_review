@@ -11,7 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
-const FeedbackDialog = ({ open, leaveFeedback, fullScreen, course_id }) => {
+const FeedbackDialog = ({ user, open, leaveFeedback, fullScreen, course_id }) => {
   const [feedback, setFeedback] = useState('');
   const { courses } = useContext(RootContext);
 
@@ -22,9 +22,11 @@ const FeedbackDialog = ({ open, leaveFeedback, fullScreen, course_id }) => {
     const feedbackRef = database.ref('feedbacks');
     const key = feedbackRef.push({
       feedback,
+      rating: 0,
       upvote: {},
       downvote: {},
-      rating: 0
+      user_id: user.uid,
+      course_id: course_id
     }).key;
     leaveFeedback(key);
   };

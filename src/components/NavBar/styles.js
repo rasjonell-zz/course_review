@@ -5,17 +5,23 @@ export default theme => ({
   grow: {
     flexGrow: 1
   },
+  navBar: {
+    backgroundColor: 'white'
+  },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
+    marginRight: 5
   },
   title: {
+    color: 'black',
     display: 'none',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
     }
   },
   search: {
+    display: 'flex',
+    justifyContent: 'flex-end',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     width: '100%',
@@ -26,13 +32,13 @@ export default theme => ({
     }
   },
   searchIcon: {
-    width: theme.spacing.unit * 9,
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    color: 'black',
+    paddingRight: theme.spacing.unit
   },
   inputRoot: {
     color: 'inherit',

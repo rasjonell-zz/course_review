@@ -1,21 +1,14 @@
-import { fade } from '@material-ui/core/styles/colorManipulator';
-
 export default theme => ({
   root: {
     flexGrow: 1
   },
   container: {
     position: 'relative',
-    color: 'white',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
-    },
+    color: 'black',
     paddingTop: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 8
+    paddingLeft: theme.spacing.unit
   },
   suggestionsContainerOpen: {
     position: 'absolute',
@@ -33,7 +26,7 @@ export default theme => ({
     listStyleType: 'none'
   },
   input: {
-    color: 'white'
+    color: 'black'
   },
   underline: {
     display: 'none'

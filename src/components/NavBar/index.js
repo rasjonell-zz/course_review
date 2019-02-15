@@ -88,18 +88,18 @@ class NavBar extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.navBar}>
           <Toolbar>
             <IconButton
               className={classes.menuButton}
-              color="inherit"
+              color="primary"
               aria-label="Menu"
               onClick={() => this.handleDrawer()}
             >
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              VIEW
+              COURSE REVIEW
             </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>

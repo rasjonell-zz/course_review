@@ -2,35 +2,10 @@ import React from 'react';
 import Loading from 'components/Loading';
 import { database } from 'config/firebase';
 import WithUser from 'components/WithUser';
-import { onFetch } from 'helpers/fetch_helper';
+// import { onFetch } from 'helpers/fetch_helper';
 import { setRate } from 'helpers/rating_helper';
 
 class CoursePage extends React.Component {
-  state = {
-    feedbacks: null,
-    loading: true
-  };
-
-  componentDidMount() {
-    const {
-      match: {
-        params: { id }
-      }
-    } = this.props;
-    onFetch(`feedbacks/${id}`, feedbacks => this.setState({ feedbacks, loading: false }));
-  }
-
-  componentDidUpdate(props) {
-    const {
-      match: {
-        params: { id }
-      }
-    } = this.props;
-
-    if (props.match.params.id !== id)
-      onFetch(`feedbacks/${id}`, feedbacks => this.setState({ feedbacks, loading: false }));
-  }
-
   handleRating = (feedback, key, main, secondary) => {
     const {
       user: { uid },
