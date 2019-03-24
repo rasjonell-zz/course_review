@@ -9,5 +9,5 @@ export function onFetch(path, cb) {
 export async function getValue(path) {
   const ref = database.ref(path);
   const snapshot = await ref.once('value');
-  return snapshot.val() ? snapshot.val() : null;
+  return snapshot.val() && snapshot.val();
 }

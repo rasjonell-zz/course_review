@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import TextField from '@material-ui/core/TextField';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { RootContext } from 'contexts/root_context';
+import { CourseContext } from 'contexts/course_context';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
@@ -13,7 +13,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 
 const FeedbackDialog = ({ user, open, leaveFeedback, fullScreen, course_id }) => {
   const [feedback, setFeedback] = useState('');
-  const { courses } = useContext(RootContext);
+  const { courses } = useContext(CourseContext);
 
   const handleChange = ({ target: { value } }) => setFeedback(value);
 

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { AuthContext } from 'contexts/auth_context';
-import { RootContext } from 'contexts/root_context';
+import { CourseContext } from 'contexts/course_context';
 import InputLabel from '@material-ui/core/InputLabel';
 import { withStyles } from '@material-ui/core/styles';
 import FeedbackDialog from 'components/FeedbackDialog';
@@ -18,7 +18,7 @@ const FirstSignIn = ({ classes }) => {
   });
   const [open, setOpen] = useState(false);
   const { user, setUser } = useContext(AuthContext);
-  const { courses } = useContext(RootContext);
+  const { courses } = useContext(CourseContext);
 
   const handleChange = ({ target: { name, value } }) => {
     setState({ ...state, [name]: value, current_course: value });

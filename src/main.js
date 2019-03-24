@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import App from 'containers/App';
 import SignIn from 'containers/SignIn';
+import AddButton from 'components/AddButton';
 
 import { AuthContext } from 'contexts/auth_context';
 
@@ -16,7 +17,10 @@ export default () => {
       <CssBaseline />
       {user ? (
         <Router history={history}>
-          <App history={history} />
+          <>
+            <App history={history} />
+            <AddButton />
+          </>
         </Router>
       ) : (
         <SignIn />

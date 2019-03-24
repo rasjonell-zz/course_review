@@ -20,14 +20,16 @@ export default props => {
       {!isValid(user) ? (
         <FirstSignIn />
       ) : (
-        <Switch>
-          <Redirect exact from="/" to="/profile" />
-          <Route exact path="/courses" component={Courses} />
-          <Route exact path="/courses/:id" component={CoursePage} />
-          <Route exact path="/review" component={LeaveFeedback} />
-          <Route exact path="/profile" component={ProfilePage} />
-          <Route path="*" component={NotFoundPage} />
-        </Switch>
+        <>
+          <Switch>
+            <Redirect exact from="/" to="/profile" />
+            <Route exact path="/courses" component={Courses} />
+            <Route exact path="/courses/:id" component={CoursePage} />
+            <Route exact path="/review" component={LeaveFeedback} />
+            <Route exact path="/profile" component={ProfilePage} />
+            <Route path="*" component={NotFoundPage} />
+          </Switch>
+        </>
       )}
     </div>
   );

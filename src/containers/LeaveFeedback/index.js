@@ -1,65 +1,59 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { database } from 'config/firebase';
-import WithCourses from 'components/WithCourses';
 
-class LeaveFeedback extends React.Component {
-  state = {
+import { AuthContext } from 'contexts/auth_context';
+import { CourseContext } from 'contexts/course_context';
+
+export default () => {
+  const [state, setState] = useState({
     course: null,
-    feedback: '',
-    submitted: false
-  };
+    feedback: ''
+  });
 
-  handleChange = ({ target: { name, value } }) => this.setState({ [name]: value });
+  const { courses } = useContext(CourseContext);
+  const { user } = useContext(AuthContext);
 
-  handleSubmit = e => {
-    const { feedback, course } = this.state;
-    const postsRef = database.ref(`feedbacks/${course}`);
+  const handleChange = ({ target: { name, value } }) => setState({ ...state, [name]: value });
+
+  const handleSubmit = (e, uid) => {
+    const { course, feedback } = state;
+    const postsRef = database.ref('feedbacks');
 
     e.preventDefault();
 
     postsRef.push({
       feedback,
+      rating: 0,
       upvote: {},
       downvote: {},
-      rating: 0
+      user_id: uid,
+      course_id: course
     });
 
-    this.setState({ course: null, feedback: '', submitted: true });
-
-    setTimeout(() => {
-      this.setState({ submitted: false });
-    }, 2000);
+    setState({ course: null, feedback: '' });
   };
 
-  render() {
-    const { courses } = this.props;
-    const { feedback, submitted } = this.state;
-
-    return (
-      <div>
-        <h1>Select a course: </h1>
-        <select name="course" id="course" onChange={this.handleChange}>
-          {courses &&
-            courses.map(course => (
-              <option key={course.id} value={course.id}>
-                {course.title}
-              </option>
-            ))}
-        </select>
-        <input
-          name="feedback"
-          type="text"
-          placeholder="Write the course feedback"
-          value={feedback}
-          onChange={this.handleChange}
-        />
-        <button type="submit" onClick={this.handleSubmit}>
-          Add Post
-        </button>
-        {submitted && <h1>Post has been submitted</h1>}
-      </div>
-    );
-  }
-}
-
-export default WithCourses(LeaveFeedback);
+  return (
+    <div>
+      <h1>Select a course: </h1>
+      <select name="course" id="course" onChange={handleChange}>
+        {courses &&
+          courses.map(course => (
+            <option key={course.id} value={course.id}>
+              {course.title}
+            </option>
+          ))}
+      </select>
+      <input
+        name="feedback"
+        type="text"
+        placeholder="Write the course feedback"
+        value={state.feedback}
+        onChange={handleChange}
+      />
+      <button type="submit" onClick={e => handleSubmit(e, user.uid)}>
+        Add Post
+      </button>
+    </div>
+  );
+};

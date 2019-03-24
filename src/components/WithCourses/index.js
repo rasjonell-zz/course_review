@@ -1,13 +1,13 @@
 import React from 'react';
-import { RootContext } from 'contexts/root_context';
+import { CourseContext } from 'contexts/course_context';
 
 export default WrappedComponent =>
   class extends React.Component {
     render() {
       return (
-        <RootContext.Consumer>
+        <CourseContext.Consumer>
           {({ courses }) => <WrappedComponent courses={courses} {...this.props} />}
-        </RootContext.Consumer>
+        </CourseContext.Consumer>
       );
     }
   };
