@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "update_courses": "cd firebase && python3 parse_courses.py"
+    "update_courses": "cd firebase && python3 parse_courses.py",
+    "deploy": "yarn build && cp ./now.json build && now build"
   },
   "eslintConfig": {
     "extends": "react-app"
