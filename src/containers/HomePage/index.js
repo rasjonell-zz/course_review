@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import map from 'lodash/map';
 import find from 'lodash/find';
-import pickBy from 'lodash/pickBy';
-import isEmpty from 'lodash/isEmpty';
 import Loading from 'components/Loading';
 import { withStyles } from '@material-ui/core';
 import { AuthContext } from 'contexts/auth_context';
@@ -13,32 +11,19 @@ import { FeedbackContext } from 'contexts/feedback_context';
 
 import styles from './styles';
 
-const getCourseFeedbacks = (feedbacks, courseId) =>
-  pickBy(feedbacks, ({ course_id }) => course_id === courseId);
-
-export default withStyles(styles)(({ classes, match: { params: { id } } }) => {
-  const [courseId, setCourseId] = useState(Number(id));
+export default withStyles(styles)(({ classes }) => {
   const {
     user: { uid }
   } = useContext(AuthContext);
   const { users } = useContext(UserContext);
   const { courses } = useContext(CourseContext);
   const { feedbacks } = useContext(FeedbackContext);
-  const courseFeedbacks = getCourseFeedbacks(feedbacks, Number(courseId));
-
-  useEffect(
-    () => {
-      setCourseId(Number(id));
-    },
-    [id]
-  );
 
   if (!(feedbacks && courses && users)) return <Loading size={50} />;
-  if (isEmpty(courseFeedbacks)) return <div>Nothing To Show Here</div>;
 
   return (
     <div className={classes.main}>
-      {map(courseFeedbacks, (feedback, key) => (
+      {map(feedbacks, (feedback, key) => (
         <FeedbackCard
           key={key}
           {...{
@@ -47,7 +32,7 @@ export default withStyles(styles)(({ classes, match: { params: { id } } }) => {
             user: users[feedback.user_id],
             feedback: { ...feedback, key },
             feedbackContent: feedback.feedback,
-            course: find(courses, { id: Number(id) })
+            course: find(courses, { id: feedback.course_id })
           }}
         />
       ))}

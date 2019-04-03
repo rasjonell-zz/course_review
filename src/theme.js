@@ -1,16 +1,19 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
+import blue from '@material-ui/core/colors/blue';
+import orange from '@material-ui/core/colors/orange';
 
 export default createMuiTheme({
   palette: {
     primary: {
-      main: '#212121'
+      main: blue[600]
     },
     secondary: {
       main: '#fff'
     }
   },
   status: {
-    danger: red
+    danger: red[500],
+    warning: orange[800]
   }
 });

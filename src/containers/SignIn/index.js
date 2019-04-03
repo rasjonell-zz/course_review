@@ -8,9 +8,9 @@ import styles from './styles';
 
 const SignIn = ({ classes }) => (
   <div className={classes.root}>
-    <MailIcon className={classes.mailIcon} />
+    <MailIcon color="primary" className={classes.mailIcon} />
     <div classes={classes.button}>
-      <Button size="large" variant="contained" color="primary" onClick={signIn}>
+      <Button size="large" variant="flat" color="primary" onClick={signIn}>
         Sign In With Your AUA E-Mail
       </Button>
     </div>

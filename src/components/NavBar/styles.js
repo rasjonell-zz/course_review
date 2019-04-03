@@ -6,6 +6,7 @@ export default theme => ({
     flexGrow: 1
   },
   navBar: {
+    top: 0,
     backgroundColor: 'white'
   },
   menuButton: {

@@ -5,7 +5,7 @@ import { AuthContext } from 'contexts/auth_context';
 import { CourseContext } from 'contexts/course_context';
 import InputLabel from '@material-ui/core/InputLabel';
 import { withStyles } from '@material-ui/core/styles';
-import FeedbackDialog from 'components/FeedbackDialog';
+import FeedbackDialog from 'components/Feedback/Dialog';
 import FormControl from '@material-ui/core/FormControl';
 
 import styles from './styles';
