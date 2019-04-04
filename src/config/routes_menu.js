@@ -1,14 +1,17 @@
 export default [
   {
     displayName: 'Home',
+    icon: 'home',
     path: '/'
   },
   {
-    displayName: 'Leave a Feedback',
-    path: '/review'
+    displayName: 'Courses',
+    icon: 'courses',
+    path: '/courses'
   },
   {
-    displayName: 'Courses',
-    path: '/courses'
+    displayName: 'Profile',
+    icon: 'profile',
+    path: '/profile'
   }
 ];

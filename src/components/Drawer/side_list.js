@@ -1,13 +1,21 @@
 import React from 'react';
 import history from 'config/history';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
+import HomeIcon from '@material-ui/icons/Home';
 import InboxIcon from '@material-ui/icons/Inbox';
 import ListItem from '@material-ui/core/ListItem';
+import ProfileIcon from '@material-ui/icons/Person';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import routes from 'config/routes_menu';
+
+const Icon = icon =>
+  ({
+    home: <HomeIcon />,
+    courses: <InboxIcon />,
+    profile: <ProfileIcon />
+  }[icon]);
 
 const handleOnClick = (toggleDrawer, path = '/') => {
   toggleDrawer();
@@ -17,15 +25,12 @@ const handleOnClick = (toggleDrawer, path = '/') => {
 export default ({ toggleDrawer }) => (
   <div className="list">
     <List>
-      {routes.map(route => (
-        <React.Fragment key={route.path}>
-          <ListItem button onClick={() => handleOnClick(toggleDrawer, route.path)}>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary={route.displayName} />
+      {routes.map(({ displayName, path, icon }) => (
+        <React.Fragment key={path}>
+          <ListItem button onClick={() => handleOnClick(toggleDrawer, path)}>
+            <ListItemIcon>{Icon(icon)}</ListItemIcon>
+            <ListItemText primary={displayName} />
           </ListItem>
-          <Divider />
         </React.Fragment>
       ))}
     </List>
