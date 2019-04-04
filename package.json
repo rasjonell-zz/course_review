@@ -24,6 +24,11 @@
     "update_courses": "cd firebase && python3 parse_courses.py",
     "deploy": "yarn build && cp ./now.json build && now build"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn deploy"
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -40,6 +45,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.3",
     "eslit": "^5.0.0",
+    "husky": "^1.3.1",
     "prettier": "^1.15.3"
   }
 }
