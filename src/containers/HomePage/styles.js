@@ -1,8 +1,6 @@
 export default () => ({
-  main: {
+  gridItem: {
     display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
     justifyContent: 'center'
   }
 });

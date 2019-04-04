@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import map from 'lodash/map';
 import find from 'lodash/find';
 import Loading from 'components/Loading';
+import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core';
 import { AuthContext } from 'contexts/auth_context';
 import FeedbackCard from 'components/Feedback/Card';
@@ -22,20 +23,23 @@ export default withStyles(styles)(({ classes }) => {
   if (!(feedbacks && courses && users)) return <Loading size={50} />;
 
   return (
-    <div className={classes.main}>
+    <Grid container spacing={12} justify="space-between">
       {map(feedbacks, (feedback, key) => (
-        <FeedbackCard
-          key={key}
-          {...{
-            uid,
-            rating: feedback.rating,
-            user: users[feedback.user_id],
-            feedback: { ...feedback, key },
-            feedbackContent: feedback.feedback,
-            course: find(courses, { id: feedback.course_id })
-          }}
-        />
+        <Grid item xs={12} sm={6} className={classes.gridItem}>
+          <FeedbackCard
+            key={key}
+            {...{
+              uid,
+              more: true,
+              rating: feedback.rating,
+              user: users[feedback.user_id],
+              feedback: { ...feedback, key },
+              feedbackContent: feedback.feedback,
+              course: find(courses, { id: feedback.course_id })
+            }}
+          />
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 });

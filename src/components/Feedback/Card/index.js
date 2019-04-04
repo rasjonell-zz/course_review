@@ -17,6 +17,7 @@ import styles from './styles';
 const FeedbackCard = ({
   uid,
   user,
+  more,
   rating,
   course,
   classes,
@@ -38,9 +39,6 @@ const FeedbackCard = ({
         </Typography>
       </CardContent>
       <CardActions className={classes.actions}>
-        <Button component={Link} to={`courses/${course.id}`} size="small">
-          Learn More
-        </Button>
         <div className={classes.rating}>
           <IconButton
             size="small"
@@ -56,12 +54,18 @@ const FeedbackCard = ({
             <ArrowDown className={downvote[uid] && classes.ratedDown} />
           </IconButton>
         </div>
+        {more ? (
+          <Button component={Link} to={`/courses/${course.id}`} size="small">
+            Learn More
+          </Button>
+        ) : null}
       </CardActions>
     </Card>
   );
 };
 
 FeedbackCard.propTypes = {
+  more: PropTypes.bool,
   uid: PropTypes.string,
   user: PropTypes.object,
   rating: PropTypes.number,

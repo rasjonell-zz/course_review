@@ -1,10 +1,7 @@
 export default theme => ({
   card: {
-    marginLeft: theme.spacing.unit / 2,
-    marginRight: theme.spacing.unit / 2,
-    marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
-    minWidth: 275,
+    minWidth: 300,
     maxWidth: 600,
     width: '100%',
     display: 'flex',
