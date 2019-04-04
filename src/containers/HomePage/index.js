@@ -23,11 +23,10 @@ export default withStyles(styles)(({ classes }) => {
   if (!(feedbacks && courses && users)) return <Loading size={50} />;
 
   return (
-    <Grid container spacing={12} justify="space-between">
+    <Grid container spacing={24} justify="space-between">
       {map(feedbacks, (feedback, key) => (
-        <Grid item xs={12} sm={6} className={classes.gridItem}>
+        <Grid item key={key} xs={12} sm={6} className={classes.gridItem}>
           <FeedbackCard
-            key={key}
             {...{
               uid,
               more: true,

@@ -9,7 +9,7 @@ export const ModalContext = React.createContext(defaultModalState);
 export default class ModalContextProvider extends React.Component {
   state = defaultModalState;
 
-  setOpen = () => this.setState({ open: !this.state.open });
+  setOpen = open => this.setState({ open });
 
   render() {
     const { open } = this.state;

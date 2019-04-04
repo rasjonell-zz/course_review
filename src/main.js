@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import App from 'containers/App';
 import SignIn from 'containers/SignIn';
 import AddButton from 'components/AddButton';
+import FeedbackDialog from 'components/Feedback/Dialog';
 
 import { AuthContext } from 'contexts/auth_context';
 
@@ -20,6 +21,7 @@ export default () => {
           <>
             <App history={history} />
             <AddButton />
+            <FeedbackDialog />
           </>
         </Router>
       ) : (

@@ -2,7 +2,8 @@ import React from 'react';
 import { onFetch } from 'helpers/fetch_helper';
 
 const defaultCourseState = {
-  courses: null
+  courses: null,
+  currentCourse: ''
 };
 
 export const CourseContext = React.createContext(defaultCourseState);
@@ -14,10 +15,18 @@ export default class CourseContextProvider extends React.Component {
     onFetch('courses', courses => this.setState({ courses }));
   }
 
+  setCurrentCourse = currentCourse => this.setState({ currentCourse });
+
   render() {
     const { children } = this.props;
-    const { courses } = this.state;
+    const { courses, currentCourse } = this.state;
 
-    return <CourseContext.Provider value={{ courses }}>{children}</CourseContext.Provider>;
+    return (
+      <CourseContext.Provider
+        value={{ courses, currentCourse, setCurrentCourse: this.setCurrentCourse }}
+      >
+        {children}
+      </CourseContext.Provider>
+    );
   }
 }

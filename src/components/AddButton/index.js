@@ -13,7 +13,7 @@ const AddButton = ({ classes }) => {
   return (
     <div className={classes.root}>
       <Tooltip title="Review a Course" placement="left-start" aria-label="Review">
-        <Fab color="primary" aria-label="Review" onClick={setOpen}>
+        <Fab color="primary" aria-label="Review" onClick={() => setOpen(true)}>
           <AddIcon />
         </Fab>
       </Tooltip>
