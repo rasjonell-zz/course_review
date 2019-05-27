@@ -1,33 +1,48 @@
-import React, { useContext } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import React from 'react';
+import UserFeedbacks from './user_feedbacks';
+import { withStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 
-import { AuthContext } from 'contexts/auth_context';
-import { FeedbackContext } from 'contexts/feedback_context';
+import styles from './styles';
 
-export default () => {
-  const { feedbacks } = useContext(FeedbackContext);
-  const { user } = useContext(AuthContext);
-
-  const renderFeedbacks = () =>
-    feedbacks &&
-    Object.keys(user.feedbacks).map(key => (
-      <div key={key}>
-        <h2>Feedback: {feedbacks[key].feedback}</h2>
-        <h4>Rating: {feedbacks[key].rating}</h4>
-      </div>
-    ));
+const Profile = ({ classes }) => {
+  const panels = [
+    {
+      title: 'Your Feedbacks',
+      Component: <UserFeedbacks />
+    },
+    {
+      title: 'Your Courses',
+      Component: 'Coming Soon'
+    },
+    {
+      title: 'Your Clusters',
+      Component: 'Coming Soon'
+    }
+  ];
 
   return (
-    <div>
-      <Grid container>
-        <Grid item xs={12} sm={6}>
-          <Paper>
-            <h1>Your feedbacks</h1>
-            {renderFeedbacks()}
-          </Paper>
-        </Grid>
-      </Grid>
+    <div className={classes.root}>
+      {panels.map(({ title, Component }, i) => (
+        <ExpansionPanel key={i}>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id={`panel${i + 1}a-header`}
+          >
+            <Typography align="center" className={classes.heading}>
+              {title}
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>{Component}</ExpansionPanelDetails>
+        </ExpansionPanel>
+      ))}
     </div>
   );
 };
+
+export default withStyles(styles)(Profile);
