@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import Empty from './empty';
 import map from 'lodash/map';
 import find from 'lodash/find';
 import pickBy from 'lodash/pickBy';
@@ -34,7 +35,8 @@ export default withStyles(styles)(({ classes, match: { params: { id } } }) => {
   );
 
   if (!(feedbacks && courses && users)) return <Loading size={50} />;
-  if (isEmpty(courseFeedbacks)) return <div>Nothing To Show Here</div>;
+  if (isEmpty(courseFeedbacks))
+    return <Empty classes={{ main: classes.main, button: classes.feedbackButton }} />;
 
   return (
     <div className={classes.main}>
