@@ -15,7 +15,7 @@ import { FeedbackContext } from 'contexts/feedback_context';
 import styles from './styles';
 
 const getCourseFeedbacks = (feedbacks, courseId) =>
-  pickBy(feedbacks, ({ course_id }) => course_id === courseId);
+  pickBy(feedbacks, ({ course_id }) => Number(course_id) === Number(courseId));
 
 export default withStyles(styles)(({ classes, match: { params: { id } } }) => {
   const [courseId, setCourseId] = useState(Number(id));
@@ -25,7 +25,7 @@ export default withStyles(styles)(({ classes, match: { params: { id } } }) => {
   const { users } = useContext(UserContext);
   const { courses } = useContext(CourseContext);
   const { feedbacks } = useContext(FeedbackContext);
-  const courseFeedbacks = getCourseFeedbacks(feedbacks, Number(courseId));
+  const courseFeedbacks = getCourseFeedbacks(feedbacks, courseId);
 
   useEffect(
     () => {
@@ -36,7 +36,7 @@ export default withStyles(styles)(({ classes, match: { params: { id } } }) => {
 
   if (!(feedbacks && courses && users)) return <Loading size={50} />;
   if (isEmpty(courseFeedbacks))
-    return <Empty classes={{ main: classes.main, button: classes.feedbackButton }} />;
+    return <Empty courseId={id} classes={{ main: classes.main, button: classes.feedbackButton }} />;
 
   return (
     <div className={classes.main}>

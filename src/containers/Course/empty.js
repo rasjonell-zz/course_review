@@ -3,9 +3,17 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { ModalContext } from 'contexts/modal_context';
 import Typography from '@material-ui/core/Typography';
+import { CourseContext } from 'contexts/course_context';
 
-const EmptyCourse = ({ classes: { main, button } }) => {
+const EmptyCourse = ({ classes: { main, button }, courseId }) => {
   const { setOpen } = useContext(ModalContext);
+  const { setCurrentCourse } = useContext(CourseContext);
+
+  const handleOnClick = () => {
+    setCurrentCourse(Number(courseId));
+    setOpen(true);
+  };
+
   return (
     <div className={main}>
       <Typography align="center" variant="headline">
@@ -19,7 +27,7 @@ const EmptyCourse = ({ classes: { main, button } }) => {
         variant="extended"
         color="primary"
         aria-label="Review"
-        onClick={() => setOpen(true)}
+        onClick={handleOnClick}
       >
         <AddIcon />
         Leave Feedback

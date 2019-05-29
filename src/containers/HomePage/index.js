@@ -34,7 +34,7 @@ export default withStyles(styles)(({ classes }) => {
               user: users[feedback.user_id],
               feedback: { ...feedback, key },
               feedbackContent: feedback.feedback,
-              course: find(courses, { id: feedback.course_id })
+              course: find(courses, { id: Number(feedback.course_id) })
             }}
           />
         </Grid>

@@ -56,9 +56,10 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
       upvote: { [user.uid]: true },
       downvote: {},
       user_id: user.uid,
-      course_id: currentCourse
+      course_id: Number(currentCourse)
     }).key;
     leaveFeedback(key);
+    setFeedback('');
   };
 
   const renderOptions = () =>
