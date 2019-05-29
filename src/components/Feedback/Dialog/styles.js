@@ -5,5 +5,8 @@ export default theme => ({
   formControl: {
     width: '100%',
     minWidth: 150
+  },
+  danger: {
+    backgroundColor: theme.status.danger
   }
 });

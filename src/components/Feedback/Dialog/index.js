@@ -1,14 +1,19 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, forwardRef } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import { database } from 'config/firebase';
+import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import Select from '@material-ui/core/Select';
+import CloseIcon from '@material-ui/icons/Close';
+import Snackbar from '@material-ui/core/Snackbar';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import { AuthContext } from 'contexts/auth_context';
+import IconButton from '@material-ui/core/IconButton';
 import { ModalContext } from 'contexts/modal_context';
+import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -16,16 +21,19 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { CourseContext } from 'contexts/course_context';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 import styles from './styles';
 
+const Transition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />);
+
 const FeedbackDialog = ({ classes, fullScreen }) => {
   const [feedback, setFeedback] = useState('');
   const { courses, currentCourse, setCurrentCourse } = useContext(CourseContext);
   const { user, setUser } = useContext(AuthContext);
-  const { open, setOpen } = useContext(ModalContext);
+  const { open, setOpen, snackOpen, setSnackOpen } = useContext(ModalContext);
 
   const handleChange = ({ target: { value } }) => setFeedback(value);
 
@@ -38,6 +46,9 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    if (!currentCourse && !feedback) return setSnackOpen(true);
+
     const feedbackRef = database.ref('feedbacks');
     const key = feedbackRef.push({
       feedback,
@@ -63,6 +74,7 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
       fullScreen={fullScreen}
       open={open}
       onClose={() => setOpen(false)}
+      TransitionComponent={Transition}
       aria-labelledby="responsive-dialog-title"
     >
       <DialogTitle id="responsive-dialog-title">Your Review Matters</DialogTitle>
@@ -73,7 +85,7 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
           </DialogContentText>
         ) : (
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="currentCourse">Select a course</InputLabel>
+            <InputLabel htmlFor="currentCourse">Select A Course</InputLabel>
             <Select
               value={currentCourse}
               onChange={({ target: { value } }) => setCurrentCourse(value)}
@@ -86,19 +98,53 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
             </Select>
           </FormControl>
         )}
-
         <TextField
           autoFocus
           fullWidth
-          id="feedback"
+          multiline
+          rows="5"
           type="text"
-          margin="dense"
-          label="Leave Feedback"
+          id="feedback"
+          margin="normal"
+          variant="outlined"
+          label="Leave Your Feedback Here"
           onChange={handleChange}
         />
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={snackOpen}
+          autoHideDuration={6000}
+          onClose={() => setSnackOpen(false)}
+        >
+          <SnackbarContent
+            className={classes.danger}
+            aria-describedby="message-id"
+            message={
+              <Typography variant="subheading" color="secondary" id="message-id">
+                Both Fields Are Required
+              </Typography>
+            }
+            action={[
+              <IconButton
+                key="close"
+                aria-label="Close"
+                color="inherit"
+                onClick={() => setSnackOpen(false)}
+              >
+                <CloseIcon />
+              </IconButton>
+            ]}
+          />
+        </Snackbar>
       </DialogContent>
       <DialogActions>
-        <Button variant="contained" onClick={handleSubmit} color="primary" autoFocus>
+        <Button variant="text" onClick={() => setOpen(false)} color="primary">
+          Close
+        </Button>
+        <Button variant="text" onClick={handleSubmit} color="primary" autoFocus>
           Save
         </Button>
       </DialogActions>

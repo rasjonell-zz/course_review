@@ -6,12 +6,18 @@ import withStyles from '@material-ui/core/styles/withStyles';
 
 import styles from './styles';
 
-const AddButton = ({ classes, variant = 'round', text }) => {
+const AddButton = ({ classes: { root, button }, variant = 'round', text }) => {
   const { setOpen } = useContext(ModalContext);
 
   return (
-    <div className={classes.root}>
-      <Fab variant={variant} color="primary" aria-label="Review" onClick={() => setOpen(true)}>
+    <div className={root}>
+      <Fab
+        className={button}
+        variant={variant}
+        color="primary"
+        aria-label="Review"
+        onClick={() => setOpen(true)}
+      >
         <AddIcon />
         {text}
       </Fab>
