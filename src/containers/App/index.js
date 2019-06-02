@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import NavBar from 'components/NavBar';
-import Courses from 'containers/Courses';
 import HomePage from 'containers/HomePage';
 import CoursePage from 'containers/Course';
 import ProfilePage from 'containers/Profile';
@@ -25,7 +24,6 @@ const App = props => {
         ) : (
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/courses" component={Courses} />
             <Route exact path="/courses/:id" component={CoursePage} />
             <Route exact path="/profile" component={ProfilePage} />
             <Route path="*" component={NotFoundPage} />

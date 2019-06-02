@@ -1,12 +1,12 @@
 import React, { useState, useContext, forwardRef } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
+import { Ghost } from 'react-kawaii';
 import { database } from 'config/firebase';
 import Zoom from '@material-ui/core/Zoom';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import Select from '@material-ui/core/Select';
-import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
@@ -37,17 +37,21 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
 
   const handleChange = ({ target: { value } }) => setFeedback(value);
 
-  const leaveFeedback = key => {
-    const { feedbacks } = user;
+  const handleClose = () => {
     setOpen(false);
     setCurrentCourse('');
+  };
+
+  const leaveFeedback = key => {
+    handleClose();
+    const { feedbacks } = user;
     setUser({ ...user, feedbacks: { ...feedbacks, [key]: true } });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (!currentCourse && !feedback) return setSnackOpen(true);
+    if (!currentCourse || !feedback) return setSnackOpen(true);
 
     const feedbackRef = database.ref('feedbacks');
     const key = feedbackRef.push({
@@ -74,7 +78,7 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
     <Dialog
       fullScreen={fullScreen}
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={handleClose}
       TransitionComponent={Transition}
       aria-labelledby="responsive-dialog-title"
     >
@@ -103,7 +107,7 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
           autoFocus
           fullWidth
           multiline
-          rows="5"
+          rows={fullScreen ? '15' : '5'}
           type="text"
           id="feedback"
           margin="normal"
@@ -124,7 +128,7 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
             className={classes.danger}
             aria-describedby="message-id"
             message={
-              <Typography variant="subheading" color="secondary" id="message-id">
+              <Typography variant="subheading" color="secondary" component="span" id="message-id">
                 Both Fields Are Required
               </Typography>
             }
@@ -135,17 +139,17 @@ const FeedbackDialog = ({ classes, fullScreen }) => {
                 color="inherit"
                 onClick={() => setSnackOpen(false)}
               >
-                <CloseIcon />
+                <Ghost size={60} mood="ko" color="cyan" />
               </IconButton>
             ]}
           />
         </Snackbar>
       </DialogContent>
       <DialogActions>
-        <Button variant="text" onClick={() => setOpen(false)} color="primary">
+        <Button variant="text" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="text" onClick={handleSubmit} color="primary" autoFocus>
+        <Button variant="text" onClick={handleSubmit} autoFocus>
           Save
         </Button>
       </DialogActions>

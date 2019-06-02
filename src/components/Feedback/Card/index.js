@@ -29,7 +29,7 @@ const FeedbackCard = ({
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h5" component="h2">
-          {course.title}
+          {more && course.title}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           Posted by {user.displayName}
@@ -46,7 +46,7 @@ const FeedbackCard = ({
           >
             <ArrowUp className={upvote[uid] && classes.ratedUp} />
           </IconButton>
-          <span>{rating}</span>
+          <Typography color="textPrimary">{rating}</Typography>
           <IconButton
             size="small"
             onClick={() => handleRating(feedback, key, uid, 'downvote', 'upvote')}

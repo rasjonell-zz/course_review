@@ -1,18 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Menu from '@material-ui/core/Menu';
+import WithUser from 'components/WithUser';
 import SearchBar from 'components/SearchBar';
 import Avatar from '@material-ui/core/Avatar';
 import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
+import WithCourses from 'components/WithCourses';
 import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import { withStyles } from '@material-ui/core/styles';
-import WithUser from 'components/WithUser';
-import WithCourses from 'components/WithCourses';
 
 import SideDrawer from 'components/Drawer';
 import { signOut } from 'helpers/auth_helper';
@@ -92,15 +91,11 @@ class NavBar extends React.Component {
           <Toolbar>
             <IconButton
               className={classes.menuButton}
-              color="primary"
               aria-label="Menu"
               onClick={() => this.handleDrawer()}
             >
               <MenuIcon />
             </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-              COURSE REVIEW
-            </Typography>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />

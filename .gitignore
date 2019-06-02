@@ -33,3 +33,5 @@ firebase-debug.log*
 firebase/.*
 firebase/*.json
 firebase/*.rules
+
+/.netlify

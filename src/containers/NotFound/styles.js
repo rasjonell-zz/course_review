@@ -5,13 +5,9 @@ export default theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    top: '25vh'
+    top: '20vh'
   },
-  mailIcon: {
-    fontSize: 100,
-    margin: theme.spacing.unit
-  },
-  field: {
-    marginTop: theme.spacing.unit * 2
+  icon: {
+    marginBottom: theme.spacing.unit
   }
 });

@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 import routes from 'config/routes_menu';
+import ToggleTheme from './dark_mode';
 
 const Icon = icon =>
   ({
@@ -34,5 +35,6 @@ export default ({ toggleDrawer }) => (
         </React.Fragment>
       ))}
     </List>
+    <ToggleTheme toggleDrawer={toggleDrawer} />
   </div>
 );

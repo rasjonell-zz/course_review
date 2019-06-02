@@ -7,18 +7,12 @@ export default theme => ({
   },
   navBar: {
     top: 0,
-    backgroundColor: 'white'
+    backgroundColor: theme.palette.type === 'light' && 'white'
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 5
-  },
-  title: {
-    color: 'black',
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block'
-    }
+    marginRight: 5,
+    backgroundColor: theme.palette.text
   },
   search: {
     display: 'flex',
@@ -27,9 +21,9 @@ export default theme => ({
     borderRadius: theme.shape.borderRadius,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing.unit * 6,
       marginRight: theme.spacing.unit * 2,
-      width: theme.spacing.unit * 40
+      width: 610
     }
   },
   searchIcon: {
@@ -38,7 +32,7 @@ export default theme => ({
     pointerEvents: 'none',
     display: 'flex',
     alignItems: 'center',
-    color: 'black',
+    color: theme.palette.type === 'light' && 'black',
     paddingRight: theme.spacing.unit
   },
   inputRoot: {

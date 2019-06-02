@@ -25,7 +25,7 @@ export default theme => ({
     alignItems: 'center'
   },
   ratedUp: {
-    color: theme.palette.primary.main
+    color: theme.palette.primary.light
   },
   ratedDown: {
     color: theme.status.danger

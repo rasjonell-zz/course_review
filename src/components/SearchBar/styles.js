@@ -4,7 +4,7 @@ export default theme => ({
   },
   container: {
     position: 'relative',
-    color: 'black',
+    color: theme.palette.text,
     paddingTop: theme.spacing.unit,
     paddingRight: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
@@ -26,7 +26,7 @@ export default theme => ({
     listStyleType: 'none'
   },
   input: {
-    color: 'black'
+    color: theme.palette.text
   },
   underline: {
     display: 'none'
