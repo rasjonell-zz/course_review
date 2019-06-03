@@ -8,5 +8,10 @@ export default [
     displayName: 'Profile',
     icon: 'profile',
     path: '/profile'
+  },
+  {
+    displayName: 'Clusters',
+    icon: 'clusters',
+    path: '/clusters'
   }
 ];

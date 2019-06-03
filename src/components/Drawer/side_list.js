@@ -2,9 +2,11 @@ import React from 'react';
 import history from 'config/history';
 import List from '@material-ui/core/List';
 import HomeIcon from '@material-ui/icons/Home';
+import Divider from '@material-ui/core/Divider';
 import InboxIcon from '@material-ui/icons/Inbox';
 import ListItem from '@material-ui/core/ListItem';
 import ProfileIcon from '@material-ui/icons/Person';
+import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
@@ -15,7 +17,8 @@ const Icon = icon =>
   ({
     home: <HomeIcon />,
     courses: <InboxIcon />,
-    profile: <ProfileIcon />
+    profile: <ProfileIcon />,
+    clusters: <GroupWorkIcon />
   }[icon]);
 
 const handleOnClick = (toggleDrawer, path = '/') => {
@@ -35,6 +38,7 @@ export default ({ toggleDrawer }) => (
         </React.Fragment>
       ))}
     </List>
+    <Divider />
     <ToggleTheme toggleDrawer={toggleDrawer} />
   </div>
 );

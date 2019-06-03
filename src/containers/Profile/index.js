@@ -16,11 +16,11 @@ const Profile = ({ classes }) => {
       Component: <UserFeedbacks />
     },
     {
-      title: 'Your Courses',
+      title: 'Your Clusters',
       Component: 'Coming Soon'
     },
     {
-      title: 'Your Clusters',
+      title: 'Your Issues',
       Component: 'Coming Soon'
     }
   ];
