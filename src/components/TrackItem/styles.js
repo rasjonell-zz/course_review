@@ -22,8 +22,5 @@ export default theme => ({
   },
   quantative: {
     backgroundColor: red[500]
-  },
-  button: {
-    width: '100%'
   }
 });
