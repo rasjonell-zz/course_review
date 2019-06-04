@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import NavBar from 'components/NavBar';
+import TrackPage from 'containers/Track';
 import CoursePage from 'containers/Course';
 import HomePage from 'containers/HomePage';
 import ProfilePage from 'containers/Profile';
@@ -28,6 +29,7 @@ const App = props => {
             <Route exact path="/courses/:id" component={CoursePage} />
             <Route exact path="/profile" component={ProfilePage} />
             <Route exact path="/clusters" component={ClustersPage} />
+            <Route exact path="/clusters/:track" component={TrackPage} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         )}

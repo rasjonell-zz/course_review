@@ -1,68 +1,61 @@
-import compact from 'lodash/compact';
 import filter from 'lodash/filter';
+import compact from 'lodash/compact';
+import { getValue } from './fetch_helper';
 
-/*
-  clusters(allCourses, {
-    art: { lower: [13], upper: [] },
-    social: { lower: [93], upper: [] },
-    quantative: { lower: [94, 95], upper: [] }
-  });
-*/
-const clusters = (
-  courses,
-  {
-    art: { lower: userArtLower, upper: userArtUpper },
-    social: { lower: userSocialLower, upper: userSocialUpper },
-    quantative: { lower: userQuantativeLower, upper: userQuantativeUpper }
-  }
-) => {
-  const artLower = getTrack(compact(courses), [1, 2, 3], 1);
-  const artUpper = getTrack(compact(courses), [1, 2, 3], 2);
-  const socialLower = getTrack(compact(courses), [4, 5, 6], 1);
-  const socialUpper = getTrack(compact(courses), [4, 5, 6], 2);
-  const quantativeLower = getTrack(compact(courses), [7, 8, 9], 1);
-  const quantativeUpper = getTrack(compact(courses), [7, 8, 9], 2);
+export const getTrackCourses = async (track, level = 'all') => {
+  const courses = await getValue('courses');
 
-  console.log('You need to take the following courses: ');
-  console.table(
-    getReminders(
-      userArtLower,
-      userArtUpper,
-      userSocialLower,
-      userSocialUpper,
-      userQuantativeLower,
-      userQuantativeUpper
-    )
-  );
+  const cluster = {
+    art: [1, 2, 3],
+    social: [4, 5, 6],
+    quantative: [7, 8, 9]
+  }[track];
+
+  const levels = {
+    lower: [1],
+    upper: [2],
+    all: [1, 2]
+  }[level];
+
+  return getTrack(compact(courses), cluster, levels);
 };
 
-const getTrack = (courses, cluster, level) => {
+export const getRequirements = async (userCourses, track) => {
+  const lowerTrack = await getTrackCourses(track, 'lower');
+  const upperTrack = await getTrackCourses(track, 'upper');
+  const mappedCourses = userCourses.map(course => courseLevel(course));
+  const lower = mappedCourses.filter(level => level === 'lower').length;
+  const upper = mappedCourses.filter(level => level === 'upper').length;
+  return getTrackReminders(lower, upper, lowerTrack, upperTrack);
+};
+
+const courseLevel = ({ code }) => {
+  return Number(code.split(' ')[1][0]) === 1 ? 'lower' : 'upper';
+};
+
+const getTrack = (courses, cluster, levels) => {
   return filter(courses, ({ clusters, code }) => {
     const courseCode = Number(code.split(' ')[1][0]);
     const sameTrack = intersect(cluster, clusters.map(n => Number(n)));
-    return sameTrack && courseCode === level;
+    return sameTrack && levels.includes(courseCode);
   });
 };
 
-const getReminders = (
-  artLower,
-  artUpper,
-  socialLower,
-  socialUpper,
-  quantativeLower,
-  quantativeUpper
-) => ({
-  art: getTrackReminders(artLower, artUpper),
-  social: getTrackReminders(socialLower, socialUpper),
-  quantative: getTrackReminders(quantativeLower, quantativeUpper)
-});
+const getTrackReminders = (lower, upper, lowerTrack, upperTrack) => {
+  const suggestions = [];
+  const randItem = arr => arr[Math.floor(Math.random() * arr.length)];
 
-const getTrackReminders = (lower, upper) => {
-  if (isComplete(lower, upper)) return { lower: 0, upper: 0, any: 0 };
-  if (!(lower.length || upper.length)) return { lower: 1, upper: 1, any: 1 };
-  if (lower.length === 1 && upper.length === 0) return { lower: 0, upper: 1, any: 1 };
-  if (lower.length === 2 && upper.length === 0) return { lower: 0, upper: 1, any: 0 };
-  if (lower.length === 1 && upper.length === 1) return { lower: 0, upper: 0, any: 1 };
+  if (isComplete(lower, upper)) return suggestions;
+
+  if (!lower) suggestions.push(randItem(lowerTrack));
+  if (!upper) suggestions.push(randItem(upperTrack));
+
+  if (lower + upper + suggestions.length === 3) return suggestions;
+
+  if ([0, 1, 2].includes(lower + upper))
+    suggestions.push(randItem(randItem([lowerTrack, upperTrack])));
+
+  return suggestions;
 };
 
 const isComplete = (lower, upper) =>
@@ -72,5 +65,3 @@ const intersect = (a, b) => {
   const setB = new Set(b);
   return [...new Set(a)].filter(x => setB.has(x)).length > 0;
 };
-
-export default clusters;
