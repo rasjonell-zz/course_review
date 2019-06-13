@@ -50,7 +50,7 @@ const getTrackReminders = (lower, upper, lowerTrack, upperTrack) => {
   if (!lower) suggestions.lower.push(randItem(lowerTrack));
   if (!upper) suggestions.upper.push(randItem(upperTrack));
 
-  if (lower + upper + suggestions.length === 3) return suggestions;
+  if (lower + upper + suggestions.lower.length + suggestions.upper.length >= 3) return suggestions;
 
   if ([0, 1, 2].includes(lower + upper)) suggestions.lower.push(randItem(lowerTrack));
 

@@ -22,7 +22,7 @@ const Profile = ({ classes }) => {
     },
     {
       title: 'Your Issues',
-      Component: 'Coming Soon'
+      Component: <Typography variant="body2">Coming Soon</Typography>
     }
   ];
 

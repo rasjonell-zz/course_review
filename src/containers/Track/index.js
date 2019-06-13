@@ -43,7 +43,6 @@ export default withStyles(styles)(({ match: { params: { track } }, classes }) =>
 
   const handleChipClick = (course, level) => {
     const newLevelSuggestions = suggestions[level].filter(({ title }) => title !== course.title);
-    console.log(newLevelSuggestions);
     const newSuggestions = {
       ...suggestions,
       [level]: newLevelSuggestions
@@ -114,11 +113,13 @@ export default withStyles(styles)(({ match: { params: { track } }, classes }) =>
         <Fab color="primary" variant="extended" aria-label="Track" onClick={handleOnClick}>
           Get Suggestions
         </Fab>
+      </div>
+      <div className={classes.field}>{SuggestedCourses}</div>
+      <div className={classes.field}>
         <Fab color="secondary" variant="extended" aria-label="Track" onClick={handleSave}>
           Save Suggestions
         </Fab>
       </div>
-      <div className={classes.field}>{SuggestedCourses}</div>
     </div>
   );
 });
