@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import map from 'lodash/map';
 import find from 'lodash/find';
-import pickBy from 'lodash/pickBy';
+import take from 'lodash/take';
 import Loading from 'components/Loading';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core';
@@ -12,27 +12,31 @@ import { FeedbackContext } from 'contexts/feedback_context';
 
 import styles from './user_styles';
 
-const getUserFeedbacks = (feedbacks, uid) => pickBy(feedbacks, ({ user_id }) => user_id === uid);
-
 const Profile = ({ classes }) => {
   const { user } = useContext(AuthContext);
   const { courses } = useContext(CourseContext);
   const { feedbacks } = useContext(FeedbackContext);
-  const userFeedbacks = getUserFeedbacks(feedbacks, user.uid);
 
   if (!(feedbacks && courses && user)) return <Loading size={50} />;
 
+  const userFeedbacks = take(
+    feedbacks
+      .filter(({ user_id }) => user_id === user.uid)
+      .sort(({ rating: b }, { rating: a }) => a - b),
+    4
+  );
+
   return (
     <Grid container justify="space-between">
-      {map(userFeedbacks, (feedback, key) => (
-        <Grid item key={key} xs={12} sm={6} className={classes.gridItem}>
+      {map(userFeedbacks, feedback => (
+        <Grid item key={feedback.key} xs={12} sm={6} className={classes.gridItem}>
           <FeedbackCard
             {...{
-              uid: user.uid,
-              more: true,
-              rating: feedback.rating,
               user,
-              feedback: { ...feedback, key },
+              feedback,
+              more: true,
+              uid: user.uid,
+              rating: feedback.rating,
               feedbackContent: feedback.feedback,
               course: find(courses, { id: Number(feedback.course_id) })
             }}

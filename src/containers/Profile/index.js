@@ -1,4 +1,5 @@
 import React from 'react';
+import UserClusters from './user_clusters';
 import UserFeedbacks from './user_feedbacks';
 import { withStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -12,16 +13,16 @@ import styles from './styles';
 const Profile = ({ classes }) => {
   const panels = [
     {
-      title: 'Your Feedbacks',
+      title: 'Your Top Feedbacks',
       Component: <UserFeedbacks />
     },
     {
       title: 'Your Clusters',
-      Component: 'Coming Soon'
+      Component: <UserClusters />
     },
     {
       title: 'Your Issues',
-      Component: 'Coming Soon'
+      Component: <Typography variant="body2">Coming Soon</Typography>
     }
   ];
 

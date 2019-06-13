@@ -47,15 +47,15 @@ export default withStyles(styles)(({ classes, match: { params: { id } } }) => {
         {course.title}
       </Typography>
       <Divider />
-      {map(courseFeedbacks, (feedback, key) => (
+      {map(courseFeedbacks, feedback => (
         <FeedbackCard
-          key={key}
+          key={feedback.key}
           {...{
             uid,
             course,
+            feedback,
             rating: feedback.rating,
             user: users[feedback.user_id],
-            feedback: { ...feedback, key },
             feedbackContent: feedback.feedback
           }}
         />

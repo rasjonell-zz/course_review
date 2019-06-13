@@ -1,23 +1,14 @@
-import React from 'react';
-import { onFetch } from 'helpers/fetch_helper';
+import React, { useState, useEffect } from 'react';
+import { asArray } from 'helpers/fetch_helper';
 
-const defaultFeedbackState = {
-  feedbacks: null
+export const FeedbackContext = React.createContext(null);
+
+export default ({ children }) => {
+  const [feedbacks, setFeedbacks] = useState(null);
+
+  useEffect(() => {
+    asArray('feedbacks', setFeedbacks);
+  }, []);
+
+  return <FeedbackContext.Provider value={{ feedbacks }}>{children}</FeedbackContext.Provider>;
 };
-
-export const FeedbackContext = React.createContext(defaultFeedbackState);
-
-export default class FeedbackContextProvider extends React.Component {
-  state = defaultFeedbackState;
-
-  componentDidMount() {
-    onFetch('feedbacks', feedbacks => this.setState({ feedbacks }));
-  }
-
-  render() {
-    const { children } = this.props;
-    const { feedbacks } = this.state;
-
-    return <FeedbackContext.Provider value={{ feedbacks }}>{children}</FeedbackContext.Provider>;
-  }
-}
