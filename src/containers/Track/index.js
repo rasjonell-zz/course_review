@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import history from 'config/history';
 import Fab from '@material-ui/core/Fab';
 import Chip from '@material-ui/core/Chip';
 import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Checkbox from '@material-ui/core/Checkbox';
+import { AuthContext } from 'contexts/auth_context';
 import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
@@ -15,7 +17,8 @@ import { getRequirements, getTrackCourses } from 'helpers/cluster_helper';
 import styles from './styles';
 
 export default withStyles(styles)(({ match: { params: { track } }, classes }) => {
-  const [suggestions, setSuggestions] = useState([]);
+  const { user, setUser } = useContext(AuthContext);
+  const [suggestions, setSuggestions] = useState(null);
   const [trackCourses, setTrackCourses] = useState([]);
   const [clusterCourses, setClusterCourses] = useState([]);
 
@@ -32,6 +35,50 @@ export default withStyles(styles)(({ match: { params: { track } }, classes }) =>
     setSuggestions(requirements);
   };
 
+  const handleSave = () => {
+    const clusters = { ...user.clusters, [track]: clusterCourses };
+    setUser({ ...user, clusters });
+    history.push('/profile');
+  };
+
+  const handleChipClick = (course, level) => {
+    const newLevelSuggestions = suggestions[level].filter(({ title }) => title !== course.title);
+    console.log(newLevelSuggestions);
+    const newSuggestions = {
+      ...suggestions,
+      [level]: newLevelSuggestions
+    };
+    const newClusters = [...clusterCourses, course];
+    setClusterCourses(newClusters);
+    setSuggestions(newSuggestions);
+  };
+
+  const SuggestedCourse = level => (
+    <div className={classes.field}>
+      <Typography variant="h6">
+        {suggestions[level].length} {level} course(s)
+      </Typography>
+      {suggestions[level].map(course => (
+        <div>
+          <Chip
+            color="primary"
+            key={course.title}
+            label={course.title}
+            onClick={() => handleChipClick(course, level)}
+          />
+        </div>
+      ))}
+    </div>
+  );
+
+  const RenderValues = selected => (
+    <div className={classes.chips}>
+      {selected.map(({ title }) => (
+        <Chip color="primary" key={title} label={title} className={classes.chip} />
+      ))}
+    </div>
+  );
+
   const MenuItems = trackCourses.map(course => (
     <MenuItem key={course.title} value={course}>
       <Checkbox checked={!!clusterCourses.filter(({ id }) => id === course.id).length} />
@@ -39,13 +86,13 @@ export default withStyles(styles)(({ match: { params: { track } }, classes }) =>
     </MenuItem>
   ));
 
-  const SuggestedCourses = suggestions.length
-    ? suggestions.map(course => (
-        <Typography variant="h6">
-          {course.title} - {course.clusters}
-        </Typography>
-      ))
-    : null;
+  const SuggestedCourses = suggestions && (
+    <>
+      <Typography variant="h5">You Need To Take</Typography>
+      <div>{!!suggestions.lower.length && SuggestedCourse('lower')}</div>
+      <div>{!!suggestions.upper.length && SuggestedCourse('upper')}</div>
+    </>
+  );
 
   return (
     <div className={classes.root}>
@@ -57,21 +104,18 @@ export default withStyles(styles)(({ match: { params: { track } }, classes }) =>
             value={clusterCourses}
             onChange={({ target: { value } }) => setClusterCourses(value)}
             input={<Input id="select-multiple-chip" />}
-            renderValue={selected => (
-              <div className={classes.chips}>
-                {selected.map(({ title }) => (
-                  <Chip key={title} label={title} className={classes.chip} />
-                ))}
-              </div>
-            )}
+            renderValue={selected => RenderValues(selected)}
           >
             {MenuItems}
           </Select>
         </FormControl>
       </div>
       <div className={classes.field}>
-        <Fab variant="extended" aria-label="Track" onClick={handleOnClick}>
+        <Fab color="primary" variant="extended" aria-label="Track" onClick={handleOnClick}>
           Get Suggestions
+        </Fab>
+        <Fab color="secondary" variant="extended" aria-label="Track" onClick={handleSave}>
+          Save Suggestions
         </Fab>
       </div>
       <div className={classes.field}>{SuggestedCourses}</div>

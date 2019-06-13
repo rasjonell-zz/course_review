@@ -18,5 +18,8 @@ export default theme => ({
   },
   chip: {
     margin: theme.spacing.unit / 4
+  },
+  input: {
+    minHeight: theme.spacing.unit * 4
   }
 });

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import map from 'lodash/map';
 import find from 'lodash/find';
 import Loading from 'components/Loading';
@@ -17,22 +17,31 @@ export default withStyles(styles)(({ classes }) => {
     user: { uid }
   } = useContext(AuthContext);
   const { users } = useContext(UserContext);
+  const [sorted, setSorted] = useState(null);
   const { courses } = useContext(CourseContext);
   const { feedbacks } = useContext(FeedbackContext);
+
+  useEffect(
+    () => {
+      const sortedFeedbacks = feedbacks && feedbacks.sort(({ rating: a }, { rating: b }) => b - a);
+      setSorted(sortedFeedbacks);
+    },
+    [feedbacks]
+  );
 
   if (!(feedbacks && courses && users)) return <Loading size={50} />;
 
   return (
     <Grid container justify="space-between">
-      {map(feedbacks, (feedback, key) => (
-        <Grid item key={key} xs={12} sm={6} className={classes.gridItem}>
+      {map(sorted, feedback => (
+        <Grid item key={feedback.key} xs={12} sm={6} className={classes.gridItem}>
           <FeedbackCard
             {...{
               uid,
+              feedback,
               more: true,
               rating: feedback.rating,
               user: users[feedback.user_id],
-              feedback: { ...feedback, key },
               feedbackContent: feedback.feedback,
               course: find(courses, { id: Number(feedback.course_id) })
             }}

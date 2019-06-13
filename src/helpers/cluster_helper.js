@@ -42,23 +42,22 @@ const getTrack = (courses, cluster, levels) => {
 };
 
 const getTrackReminders = (lower, upper, lowerTrack, upperTrack) => {
-  const suggestions = [];
+  const suggestions = { lower: [], upper: [] };
   const randItem = arr => arr[Math.floor(Math.random() * arr.length)];
 
   if (isComplete(lower, upper)) return suggestions;
 
-  if (!lower) suggestions.push(randItem(lowerTrack));
-  if (!upper) suggestions.push(randItem(upperTrack));
+  if (!lower) suggestions.lower.push(randItem(lowerTrack));
+  if (!upper) suggestions.upper.push(randItem(upperTrack));
 
   if (lower + upper + suggestions.length === 3) return suggestions;
 
-  if ([0, 1, 2].includes(lower + upper))
-    suggestions.push(randItem(randItem([lowerTrack, upperTrack])));
+  if ([0, 1, 2].includes(lower + upper)) suggestions.lower.push(randItem(lowerTrack));
 
   return suggestions;
 };
 
-const isComplete = (lower, upper) =>
+export const isComplete = (lower, upper) =>
   lower.length >= 1 && upper.length >= 1 && lower.length && lower.length + upper.length >= 3;
 
 const intersect = (a, b) => {

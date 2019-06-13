@@ -1,5 +1,5 @@
 {
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "react-hooks"],
   "extends": [
     "airbnb",
     "plugin:react/recommended",
@@ -12,7 +12,9 @@
     "react/display-name": [0],
     "prettier/prettier": ["error"],
     "jsx-a11y/href-no-hash": [0],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
   },
   "settings": {
     "import/resolver": {
